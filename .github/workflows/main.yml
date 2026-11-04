@@ -4,19 +4,9 @@ on:
   schedule:
     # 06:17 Asia/Shanghai; refresh the schedule and avoid the hourly peak.
     - cron: '17 22 * * *'
-    # Temporary no-email probe; removed after a scheduled run is observed.
-    - cron: '*/5 * * * *'
 
 jobs:
-  verify-schedule:
-    if: github.event_name == 'schedule' && github.event.schedule == '*/5 * * * *'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Confirm scheduled trigger
-        run: echo 'Scheduled triggering is working; no email is sent by this probe.'
-
   calculate-and-send:
-    if: github.event_name != 'schedule' || github.event.schedule == '17 22 * * *'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
